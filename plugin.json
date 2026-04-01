@@ -15,7 +15,7 @@
     }
   },
   "settings_schema": {
-    "header": "Bot Webhook Plugin 0.4.2",
+    "header": "Bot Webhook Plugin 0.4.2<br>Para cada bot: informe o <b>Username</b> (@username) e salve — o <b>User ID</b> será preenchido automaticamente.",
     "settings": [
       {
         "key": "BotUsername",
