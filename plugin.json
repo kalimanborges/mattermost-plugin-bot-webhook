@@ -36,7 +36,6 @@
         "key": "BearerToken",
         "display_name": "Bot 1 Bearer Token",
         "type": "text",
-        "secret": true,
         "help_text": "The bearer token to use for bot 1's HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
@@ -61,7 +60,6 @@
         "key": "BearerToken2",
         "display_name": "Bot 2 Bearer Token",
         "type": "text",
-        "secret": true,
         "help_text": "The bearer token to use for bot 2's HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
@@ -86,7 +84,6 @@
         "key": "BearerToken3",
         "display_name": "Bot 3 Bearer Token",
         "type": "text",
-        "secret": true,
         "help_text": "The bearer token to use for bot 3's HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
@@ -111,7 +108,6 @@
         "key": "BearerToken4",
         "display_name": "Bot 4 Bearer Token",
         "type": "text",
-        "secret": true,
         "help_text": "The bearer token to use for bot 4's HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
@@ -136,7 +132,6 @@
         "key": "BearerToken5",
         "display_name": "Bot 5 Bearer Token",
         "type": "text",
-        "secret": true,
         "help_text": "The bearer token to use for bot 5's HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
@@ -161,7 +156,6 @@
         "key": "BearerToken6",
         "display_name": "Bot 6 Bearer Token",
         "type": "text",
-        "secret": true,
         "help_text": "The bearer token to use for bot 6's HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
@@ -186,7 +180,6 @@
         "key": "BearerToken7",
         "display_name": "Bot 7 Bearer Token",
         "type": "text",
-        "secret": true,
         "help_text": "The bearer token to use for bot 7's HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
@@ -211,7 +204,6 @@
         "key": "BearerToken8",
         "display_name": "Bot 8 Bearer Token",
         "type": "text",
-        "secret": true,
         "help_text": "The bearer token to use for bot 8's HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
@@ -236,7 +228,6 @@
         "key": "BearerToken9",
         "display_name": "Bot 9 Bearer Token",
         "type": "text",
-        "secret": true,
         "help_text": "The bearer token to use for bot 9's HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
@@ -261,7 +252,6 @@
         "key": "BearerToken10",
         "display_name": "Bot 10 Bearer Token",
         "type": "text",
-        "secret": true,
         "help_text": "The bearer token to use for bot 10's HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
