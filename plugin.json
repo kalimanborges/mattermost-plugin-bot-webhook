@@ -3,7 +3,7 @@
   "name": "Bot Webhook",
   "description": "This plugin allows you to send a webhook when a bot receives a message.",
   "icon_path": "assets/starter-template-icon.svg",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "min_server_version": "6.2.1",
   "server": {
     "executables": {
@@ -18,25 +18,251 @@
     "settings": [
       {
         "key": "BotUserID",
-        "display_name": "Bot User ID",
+        "display_name": "Bot 1 User ID",
         "type": "text",
-        "help_text": "The user ID of the bot to listen for messages.",
+        "help_text": "The user ID of bot 1 to listen for messages.",
         "placeholder": "Enter the bot user ID",
         "default": ""
       },
       {
         "key": "WebhookURL",
-        "display_name": "Webhook URL",
+        "display_name": "Bot 1 Webhook URL",
         "type": "text",
-        "help_text": "The URL to send the HTTP request to when the bot receives a message.",
+        "help_text": "The URL to send the HTTP request to when bot 1 receives a message.",
         "placeholder": "Enter the webhook URL",
         "default": ""
       },
       {
         "key": "BearerToken",
-        "display_name": "Bearer Token",
+        "display_name": "Bot 1 Bearer Token",
         "type": "text",
-        "help_text": "The bearer token to use for the HTTP request.",
+        "secret": true,
+        "help_text": "The bearer token to use for bot 1's HTTP request.",
+        "placeholder": "Enter the Bearer token",
+        "default": ""
+      },
+      {
+        "key": "BotUserID2",
+        "display_name": "Bot 2 User ID",
+        "type": "text",
+        "help_text": "The user ID of bot 2 to listen for messages.",
+        "placeholder": "Enter the bot user ID",
+        "default": ""
+      },
+      {
+        "key": "WebhookURL2",
+        "display_name": "Bot 2 Webhook URL",
+        "type": "text",
+        "help_text": "The URL to send the HTTP request to when bot 2 receives a message.",
+        "placeholder": "Enter the webhook URL",
+        "default": ""
+      },
+      {
+        "key": "BearerToken2",
+        "display_name": "Bot 2 Bearer Token",
+        "type": "text",
+        "secret": true,
+        "help_text": "The bearer token to use for bot 2's HTTP request.",
+        "placeholder": "Enter the Bearer token",
+        "default": ""
+      },
+      {
+        "key": "BotUserID3",
+        "display_name": "Bot 3 User ID",
+        "type": "text",
+        "help_text": "The user ID of bot 3 to listen for messages.",
+        "placeholder": "Enter the bot user ID",
+        "default": ""
+      },
+      {
+        "key": "WebhookURL3",
+        "display_name": "Bot 3 Webhook URL",
+        "type": "text",
+        "help_text": "The URL to send the HTTP request to when bot 3 receives a message.",
+        "placeholder": "Enter the webhook URL",
+        "default": ""
+      },
+      {
+        "key": "BearerToken3",
+        "display_name": "Bot 3 Bearer Token",
+        "type": "text",
+        "secret": true,
+        "help_text": "The bearer token to use for bot 3's HTTP request.",
+        "placeholder": "Enter the Bearer token",
+        "default": ""
+      },
+      {
+        "key": "BotUserID4",
+        "display_name": "Bot 4 User ID",
+        "type": "text",
+        "help_text": "The user ID of bot 4 to listen for messages.",
+        "placeholder": "Enter the bot user ID",
+        "default": ""
+      },
+      {
+        "key": "WebhookURL4",
+        "display_name": "Bot 4 Webhook URL",
+        "type": "text",
+        "help_text": "The URL to send the HTTP request to when bot 4 receives a message.",
+        "placeholder": "Enter the webhook URL",
+        "default": ""
+      },
+      {
+        "key": "BearerToken4",
+        "display_name": "Bot 4 Bearer Token",
+        "type": "text",
+        "secret": true,
+        "help_text": "The bearer token to use for bot 4's HTTP request.",
+        "placeholder": "Enter the Bearer token",
+        "default": ""
+      },
+      {
+        "key": "BotUserID5",
+        "display_name": "Bot 5 User ID",
+        "type": "text",
+        "help_text": "The user ID of bot 5 to listen for messages.",
+        "placeholder": "Enter the bot user ID",
+        "default": ""
+      },
+      {
+        "key": "WebhookURL5",
+        "display_name": "Bot 5 Webhook URL",
+        "type": "text",
+        "help_text": "The URL to send the HTTP request to when bot 5 receives a message.",
+        "placeholder": "Enter the webhook URL",
+        "default": ""
+      },
+      {
+        "key": "BearerToken5",
+        "display_name": "Bot 5 Bearer Token",
+        "type": "text",
+        "secret": true,
+        "help_text": "The bearer token to use for bot 5's HTTP request.",
+        "placeholder": "Enter the Bearer token",
+        "default": ""
+      },
+      {
+        "key": "BotUserID6",
+        "display_name": "Bot 6 User ID",
+        "type": "text",
+        "help_text": "The user ID of bot 6 to listen for messages.",
+        "placeholder": "Enter the bot user ID",
+        "default": ""
+      },
+      {
+        "key": "WebhookURL6",
+        "display_name": "Bot 6 Webhook URL",
+        "type": "text",
+        "help_text": "The URL to send the HTTP request to when bot 6 receives a message.",
+        "placeholder": "Enter the webhook URL",
+        "default": ""
+      },
+      {
+        "key": "BearerToken6",
+        "display_name": "Bot 6 Bearer Token",
+        "type": "text",
+        "secret": true,
+        "help_text": "The bearer token to use for bot 6's HTTP request.",
+        "placeholder": "Enter the Bearer token",
+        "default": ""
+      },
+      {
+        "key": "BotUserID7",
+        "display_name": "Bot 7 User ID",
+        "type": "text",
+        "help_text": "The user ID of bot 7 to listen for messages.",
+        "placeholder": "Enter the bot user ID",
+        "default": ""
+      },
+      {
+        "key": "WebhookURL7",
+        "display_name": "Bot 7 Webhook URL",
+        "type": "text",
+        "help_text": "The URL to send the HTTP request to when bot 7 receives a message.",
+        "placeholder": "Enter the webhook URL",
+        "default": ""
+      },
+      {
+        "key": "BearerToken7",
+        "display_name": "Bot 7 Bearer Token",
+        "type": "text",
+        "secret": true,
+        "help_text": "The bearer token to use for bot 7's HTTP request.",
+        "placeholder": "Enter the Bearer token",
+        "default": ""
+      },
+      {
+        "key": "BotUserID8",
+        "display_name": "Bot 8 User ID",
+        "type": "text",
+        "help_text": "The user ID of bot 8 to listen for messages.",
+        "placeholder": "Enter the bot user ID",
+        "default": ""
+      },
+      {
+        "key": "WebhookURL8",
+        "display_name": "Bot 8 Webhook URL",
+        "type": "text",
+        "help_text": "The URL to send the HTTP request to when bot 8 receives a message.",
+        "placeholder": "Enter the webhook URL",
+        "default": ""
+      },
+      {
+        "key": "BearerToken8",
+        "display_name": "Bot 8 Bearer Token",
+        "type": "text",
+        "secret": true,
+        "help_text": "The bearer token to use for bot 8's HTTP request.",
+        "placeholder": "Enter the Bearer token",
+        "default": ""
+      },
+      {
+        "key": "BotUserID9",
+        "display_name": "Bot 9 User ID",
+        "type": "text",
+        "help_text": "The user ID of bot 9 to listen for messages.",
+        "placeholder": "Enter the bot user ID",
+        "default": ""
+      },
+      {
+        "key": "WebhookURL9",
+        "display_name": "Bot 9 Webhook URL",
+        "type": "text",
+        "help_text": "The URL to send the HTTP request to when bot 9 receives a message.",
+        "placeholder": "Enter the webhook URL",
+        "default": ""
+      },
+      {
+        "key": "BearerToken9",
+        "display_name": "Bot 9 Bearer Token",
+        "type": "text",
+        "secret": true,
+        "help_text": "The bearer token to use for bot 9's HTTP request.",
+        "placeholder": "Enter the Bearer token",
+        "default": ""
+      },
+      {
+        "key": "BotUserID10",
+        "display_name": "Bot 10 User ID",
+        "type": "text",
+        "help_text": "The user ID of bot 10 to listen for messages.",
+        "placeholder": "Enter the bot user ID",
+        "default": ""
+      },
+      {
+        "key": "WebhookURL10",
+        "display_name": "Bot 10 Webhook URL",
+        "type": "text",
+        "help_text": "The URL to send the HTTP request to when bot 10 receives a message.",
+        "placeholder": "Enter the webhook URL",
+        "default": ""
+      },
+      {
+        "key": "BearerToken10",
+        "display_name": "Bot 10 Bearer Token",
+        "type": "text",
+        "secret": true,
+        "help_text": "The bearer token to use for bot 10's HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
       }
