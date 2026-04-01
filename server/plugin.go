@@ -102,10 +102,12 @@ func (p *BotWebhookPlugin) activeBots() []botMapping {
 		// Fallback: resolve username if user ID is not yet populated
 		if id == "" && b.username != "" {
 			u := strings.TrimPrefix(b.username, "@")
+			p.API.LogInfo("[BotWebhook] activeBots: resolving username via fallback", "username", u)
 			if user, appErr := p.API.GetUserByUsername(u); appErr == nil {
+				p.API.LogInfo("[BotWebhook] activeBots: fallback resolved", "username", u, "userID", user.Id)
 				id = user.Id
 			} else {
-				p.API.LogWarn("Could not resolve bot username", "username", u, "error", appErr.Error())
+				p.API.LogError("[BotWebhook] activeBots: fallback failed", "username", u, "error", appErr.Error())
 			}
 		}
 		if id != "" {
@@ -116,63 +118,76 @@ func (p *BotWebhookPlugin) activeBots() []botMapping {
 }
 
 func (p *BotWebhookPlugin) OnConfigurationChange() error {
+	p.API.LogInfo("[BotWebhook] OnConfigurationChange triggered")
+
 	var configuration Configuration
 	if err := p.API.LoadPluginConfiguration(&configuration); err != nil {
-		p.API.LogError("Failed to load configuration", "error", err.Error())
+		p.API.LogError("[BotWebhook] Failed to load configuration", "error", err.Error())
 		return err
 	}
+	p.API.LogInfo("[BotWebhook] Configuration loaded successfully")
 
 	// Resolve @username fields to user IDs
 	updated := false
-	resolve := func(username *string, userID *string) {
+	resolve := func(slot string, username *string, userID *string) {
 		if *username == "" {
 			return
 		}
 		u := strings.TrimPrefix(*username, "@")
+		p.API.LogInfo("[BotWebhook] Attempting to resolve username", "slot", slot, "username", u, "current_userID", *userID)
 		user, appErr := p.API.GetUserByUsername(u)
 		if appErr != nil {
-			p.API.LogWarn("Failed to resolve username", "username", u, "error", appErr.Error())
+			p.API.LogError("[BotWebhook] GetUserByUsername failed", "slot", slot, "username", u, "error", appErr.Error())
 			return
 		}
+		p.API.LogInfo("[BotWebhook] Username resolved", "slot", slot, "username", u, "userID", user.Id)
 		if *userID != user.Id {
+			p.API.LogInfo("[BotWebhook] Updating userID", "slot", slot, "old", *userID, "new", user.Id)
 			*userID = user.Id
 			updated = true
+		} else {
+			p.API.LogInfo("[BotWebhook] UserID already up to date", "slot", slot, "userID", *userID)
 		}
 	}
 
-	resolve(&configuration.BotUsername, &configuration.BotUserID)
-	resolve(&configuration.BotUsername2, &configuration.BotUserID2)
-	resolve(&configuration.BotUsername3, &configuration.BotUserID3)
-	resolve(&configuration.BotUsername4, &configuration.BotUserID4)
-	resolve(&configuration.BotUsername5, &configuration.BotUserID5)
-	resolve(&configuration.BotUsername6, &configuration.BotUserID6)
-	resolve(&configuration.BotUsername7, &configuration.BotUserID7)
-	resolve(&configuration.BotUsername8, &configuration.BotUserID8)
-	resolve(&configuration.BotUsername9, &configuration.BotUserID9)
-	resolve(&configuration.BotUsername10, &configuration.BotUserID10)
+	resolve("bot1", &configuration.BotUsername, &configuration.BotUserID)
+	resolve("bot2", &configuration.BotUsername2, &configuration.BotUserID2)
+	resolve("bot3", &configuration.BotUsername3, &configuration.BotUserID3)
+	resolve("bot4", &configuration.BotUsername4, &configuration.BotUserID4)
+	resolve("bot5", &configuration.BotUsername5, &configuration.BotUserID5)
+	resolve("bot6", &configuration.BotUsername6, &configuration.BotUserID6)
+	resolve("bot7", &configuration.BotUsername7, &configuration.BotUserID7)
+	resolve("bot8", &configuration.BotUsername8, &configuration.BotUserID8)
+	resolve("bot9", &configuration.BotUsername9, &configuration.BotUserID9)
+	resolve("bot10", &configuration.BotUsername10, &configuration.BotUserID10)
+
+	p.API.LogInfo("[BotWebhook] Resolution complete", "updated", updated)
 
 	// Set configuration in memory first so the plugin is immediately operational
 	// with the resolved IDs, regardless of when SavePluginConfig completes.
 	p.configuration = &configuration
 
 	if updated {
-		// Write resolved IDs back to the config store in a goroutine to avoid
-		// blocking and to prevent re-entrant OnConfigurationChange ordering issues.
+		p.API.LogInfo("[BotWebhook] Scheduling SavePluginConfig in goroutine")
 		configSnapshot := configuration
 		go func() {
+			p.API.LogInfo("[BotWebhook] SavePluginConfig goroutine started")
 			configBytes, err := json.Marshal(configSnapshot)
 			if err != nil {
-				p.API.LogError("Failed to marshal configuration for save", "error", err.Error())
+				p.API.LogError("[BotWebhook] Failed to marshal configuration for save", "error", err.Error())
 				return
 			}
 			var configMap map[string]interface{}
 			if err := json.Unmarshal(configBytes, &configMap); err != nil {
-				p.API.LogError("Failed to unmarshal configuration for save", "error", err.Error())
+				p.API.LogError("[BotWebhook] Failed to unmarshal configuration for save", "error", err.Error())
 				return
 			}
+			p.API.LogInfo("[BotWebhook] Calling SavePluginConfig")
 			if appErr := p.API.SavePluginConfig(configMap); appErr != nil {
-				p.API.LogError("Failed to save resolved configuration", "error", appErr.Error())
+				p.API.LogError("[BotWebhook] SavePluginConfig failed", "error", appErr.Error())
+				return
 			}
+			p.API.LogInfo("[BotWebhook] SavePluginConfig completed successfully")
 		}()
 	}
 
@@ -180,11 +195,11 @@ func (p *BotWebhookPlugin) OnConfigurationChange() error {
 }
 
 func (p *BotWebhookPlugin) MessageHasBeenPosted(c *plugin.Context, post *model.Post) {
-	p.API.LogDebug("MessageHasBeenPosted")
+	p.API.LogDebug("[BotWebhook] MessageHasBeenPosted")
 
 	channel, err := p.API.GetChannel(post.ChannelId)
 	if err != nil {
-		p.API.LogError("Failed to get channel", "error", err.Error())
+		p.API.LogError("[BotWebhook] Failed to get channel", "error", err.Error())
 		return
 	}
 
@@ -197,17 +212,17 @@ func (p *BotWebhookPlugin) MessageHasBeenPosted(c *plugin.Context, post *model.P
 			continue
 		}
 
-		p.API.LogDebug("Message to bot detected", "channel", channel.Name, "user", post.UserId, "message", post.Message, "bot", bot.BotUserID)
+		p.API.LogInfo("[BotWebhook] Message to bot detected", "channel", channel.Name, "user", post.UserId, "bot", bot.BotUserID)
 
 		jsonPayload, err := json.Marshal(post)
 		if err != nil {
-			p.API.LogError("Failed to marshal JSON payload", "error", err.Error())
+			p.API.LogError("[BotWebhook] Failed to marshal JSON payload", "error", err.Error())
 			continue
 		}
 
 		req, err := http.NewRequest("POST", bot.WebhookURL, bytes.NewBuffer(jsonPayload))
 		if err != nil {
-			p.API.LogError("Failed to create HTTP request", "error", err.Error())
+			p.API.LogError("[BotWebhook] Failed to create HTTP request", "error", err.Error())
 			continue
 		}
 		req.Header.Set("Authorization", "Bearer "+bot.BearerToken)
@@ -216,10 +231,11 @@ func (p *BotWebhookPlugin) MessageHasBeenPosted(c *plugin.Context, post *model.P
 		client := &http.Client{}
 		resp, err := client.Do(req)
 		if err != nil {
-			p.API.LogError("Failed to make an HTTP request", "error", err.Error())
+			p.API.LogError("[BotWebhook] Failed to make HTTP request", "error", err.Error())
 			continue
 		}
 		resp.Body.Close()
+		p.API.LogInfo("[BotWebhook] Webhook dispatched successfully", "bot", bot.BotUserID, "url", bot.WebhookURL)
 		break
 	}
 }
