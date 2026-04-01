@@ -125,7 +125,12 @@ func (p *BotWebhookPlugin) OnConfigurationChange() error {
 		p.API.LogError("[BotWebhook] Failed to load configuration", "error", err.Error())
 		return err
 	}
-	p.API.LogInfo("[BotWebhook] Configuration loaded successfully")
+	p.API.LogInfo("[BotWebhook] Configuration loaded successfully",
+		"bot1_username", configuration.BotUsername,
+		"bot1_userID", configuration.BotUserID,
+		"bot2_username", configuration.BotUsername2,
+		"bot2_userID", configuration.BotUserID2,
+	)
 
 	// Resolve @username fields to user IDs
 	updated := false
@@ -163,32 +168,26 @@ func (p *BotWebhookPlugin) OnConfigurationChange() error {
 
 	p.API.LogInfo("[BotWebhook] Resolution complete", "updated", updated)
 
-	// Set configuration in memory first so the plugin is immediately operational
-	// with the resolved IDs, regardless of when SavePluginConfig completes.
+	// Set configuration in memory so the plugin is immediately operational.
 	p.configuration = &configuration
 
 	if updated {
-		p.API.LogInfo("[BotWebhook] Scheduling SavePluginConfig in goroutine")
-		configSnapshot := configuration
-		go func() {
-			p.API.LogInfo("[BotWebhook] SavePluginConfig goroutine started")
-			configBytes, err := json.Marshal(configSnapshot)
-			if err != nil {
-				p.API.LogError("[BotWebhook] Failed to marshal configuration for save", "error", err.Error())
-				return
-			}
-			var configMap map[string]interface{}
-			if err := json.Unmarshal(configBytes, &configMap); err != nil {
-				p.API.LogError("[BotWebhook] Failed to unmarshal configuration for save", "error", err.Error())
-				return
-			}
-			p.API.LogInfo("[BotWebhook] Calling SavePluginConfig")
-			if appErr := p.API.SavePluginConfig(configMap); appErr != nil {
-				p.API.LogError("[BotWebhook] SavePluginConfig failed", "error", appErr.Error())
-				return
-			}
-			p.API.LogInfo("[BotWebhook] SavePluginConfig completed successfully")
-		}()
+		p.API.LogInfo("[BotWebhook] Calling SavePluginConfig synchronously")
+		configBytes, err := json.Marshal(configuration)
+		if err != nil {
+			p.API.LogError("[BotWebhook] Failed to marshal configuration for save", "error", err.Error())
+			return nil
+		}
+		var configMap map[string]interface{}
+		if err := json.Unmarshal(configBytes, &configMap); err != nil {
+			p.API.LogError("[BotWebhook] Failed to unmarshal configuration for save", "error", err.Error())
+			return nil
+		}
+		if appErr := p.API.SavePluginConfig(configMap); appErr != nil {
+			p.API.LogError("[BotWebhook] SavePluginConfig failed", "error", appErr.Error())
+			return nil
+		}
+		p.API.LogInfo("[BotWebhook] SavePluginConfig completed successfully")
 	}
 
 	return nil
