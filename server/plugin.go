@@ -11,42 +11,52 @@ import (
 )
 
 type Configuration struct {
+	BotUsername string
 	BotUserID   string
 	WebhookURL  string
 	BearerToken string
 
+	BotUsername2 string
 	BotUserID2   string
 	WebhookURL2  string
 	BearerToken2 string
 
+	BotUsername3 string
 	BotUserID3   string
 	WebhookURL3  string
 	BearerToken3 string
 
+	BotUsername4 string
 	BotUserID4   string
 	WebhookURL4  string
 	BearerToken4 string
 
+	BotUsername5 string
 	BotUserID5   string
 	WebhookURL5  string
 	BearerToken5 string
 
+	BotUsername6 string
 	BotUserID6   string
 	WebhookURL6  string
 	BearerToken6 string
 
+	BotUsername7 string
 	BotUserID7   string
 	WebhookURL7  string
 	BearerToken7 string
 
+	BotUsername8 string
 	BotUserID8   string
 	WebhookURL8  string
 	BearerToken8 string
 
+	BotUsername9 string
 	BotUserID9   string
 	WebhookURL9  string
 	BearerToken9 string
 
+	BotUsername10 string
 	BotUserID10   string
 	WebhookURL10  string
 	BearerToken10 string
@@ -92,6 +102,50 @@ func (p *BotWebhookPlugin) OnConfigurationChange() error {
 		p.API.LogError("Failed to load configuration", "error", err.Error())
 		return err
 	}
+
+	// Resolve @username fields to user IDs
+	updated := false
+	resolve := func(username *string, userID *string) {
+		if *username == "" {
+			return
+		}
+		u := strings.TrimPrefix(*username, "@")
+		user, appErr := p.API.GetUserByUsername(u)
+		if appErr != nil {
+			p.API.LogError("Failed to resolve username", "username", u, "error", appErr.Error())
+			return
+		}
+		if *userID != user.Id {
+			*userID = user.Id
+			updated = true
+		}
+	}
+
+	resolve(&configuration.BotUsername, &configuration.BotUserID)
+	resolve(&configuration.BotUsername2, &configuration.BotUserID2)
+	resolve(&configuration.BotUsername3, &configuration.BotUserID3)
+	resolve(&configuration.BotUsername4, &configuration.BotUserID4)
+	resolve(&configuration.BotUsername5, &configuration.BotUserID5)
+	resolve(&configuration.BotUsername6, &configuration.BotUserID6)
+	resolve(&configuration.BotUsername7, &configuration.BotUserID7)
+	resolve(&configuration.BotUsername8, &configuration.BotUserID8)
+	resolve(&configuration.BotUsername9, &configuration.BotUserID9)
+	resolve(&configuration.BotUsername10, &configuration.BotUserID10)
+
+	if updated {
+		configBytes, err := json.Marshal(configuration)
+		if err != nil {
+			p.API.LogError("Failed to marshal configuration", "error", err.Error())
+		} else {
+			var configMap map[string]interface{}
+			if err := json.Unmarshal(configBytes, &configMap); err != nil {
+				p.API.LogError("Failed to unmarshal configuration", "error", err.Error())
+			} else if appErr := p.API.SavePluginConfig(configMap); appErr != nil {
+				p.API.LogError("Failed to save resolved configuration", "error", appErr.Error())
+			}
+		}
+	}
+
 	p.configuration = &configuration
 	return nil
 }

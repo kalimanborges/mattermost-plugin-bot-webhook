@@ -3,7 +3,7 @@
   "name": "Bot Webhook",
   "description": "This plugin allows you to send a webhook when a bot receives a message.",
   "icon_path": "assets/starter-template-icon.svg",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "min_server_version": "6.2.1",
   "server": {
     "executables": {
@@ -15,14 +15,22 @@
     }
   },
   "settings_schema": {
-    "header": "Bot Webhook Plugin 0.4.1",
+    "header": "Bot Webhook Plugin 0.4.2",
     "settings": [
+      {
+        "key": "BotUsername",
+        "display_name": "Bot 1 Username",
+        "type": "text",
+        "help_text": "Username do bot 1 (ex: @meu-bot). Ao salvar, o User ID será resolvido automaticamente.",
+        "placeholder": "@username",
+        "default": ""
+      },
       {
         "key": "BotUserID",
         "display_name": "Bot 1 User ID",
         "type": "text",
-        "help_text": "The user ID of bot 1 to listen for messages.",
-        "placeholder": "Enter the bot user ID",
+        "help_text": "Preenchido automaticamente a partir do username acima. Não edite manualmente.",
+        "placeholder": "",
         "default": ""
       },
       {
@@ -42,11 +50,19 @@
         "default": ""
       },
       {
+        "key": "BotUsername2",
+        "display_name": "Bot 2 Username",
+        "type": "text",
+        "help_text": "Username do bot 2 (ex: @meu-bot). Ao salvar, o User ID será resolvido automaticamente.",
+        "placeholder": "@username",
+        "default": ""
+      },
+      {
         "key": "BotUserID2",
         "display_name": "Bot 2 User ID",
         "type": "text",
-        "help_text": "The user ID of bot 2 to listen for messages.",
-        "placeholder": "Enter the bot user ID",
+        "help_text": "Preenchido automaticamente a partir do username acima. Não edite manualmente.",
+        "placeholder": "",
         "default": ""
       },
       {
@@ -66,11 +82,19 @@
         "default": ""
       },
       {
+        "key": "BotUsername3",
+        "display_name": "Bot 3 Username",
+        "type": "text",
+        "help_text": "Username do bot 3 (ex: @meu-bot). Ao salvar, o User ID será resolvido automaticamente.",
+        "placeholder": "@username",
+        "default": ""
+      },
+      {
         "key": "BotUserID3",
         "display_name": "Bot 3 User ID",
         "type": "text",
-        "help_text": "The user ID of bot 3 to listen for messages.",
-        "placeholder": "Enter the bot user ID",
+        "help_text": "Preenchido automaticamente a partir do username acima. Não edite manualmente.",
+        "placeholder": "",
         "default": ""
       },
       {
@@ -90,11 +114,19 @@
         "default": ""
       },
       {
+        "key": "BotUsername4",
+        "display_name": "Bot 4 Username",
+        "type": "text",
+        "help_text": "Username do bot 4 (ex: @meu-bot). Ao salvar, o User ID será resolvido automaticamente.",
+        "placeholder": "@username",
+        "default": ""
+      },
+      {
         "key": "BotUserID4",
         "display_name": "Bot 4 User ID",
         "type": "text",
-        "help_text": "The user ID of bot 4 to listen for messages.",
-        "placeholder": "Enter the bot user ID",
+        "help_text": "Preenchido automaticamente a partir do username acima. Não edite manualmente.",
+        "placeholder": "",
         "default": ""
       },
       {
@@ -114,11 +146,19 @@
         "default": ""
       },
       {
+        "key": "BotUsername5",
+        "display_name": "Bot 5 Username",
+        "type": "text",
+        "help_text": "Username do bot 5 (ex: @meu-bot). Ao salvar, o User ID será resolvido automaticamente.",
+        "placeholder": "@username",
+        "default": ""
+      },
+      {
         "key": "BotUserID5",
         "display_name": "Bot 5 User ID",
         "type": "text",
-        "help_text": "The user ID of bot 5 to listen for messages.",
-        "placeholder": "Enter the bot user ID",
+        "help_text": "Preenchido automaticamente a partir do username acima. Não edite manualmente.",
+        "placeholder": "",
         "default": ""
       },
       {
@@ -138,11 +178,19 @@
         "default": ""
       },
       {
+        "key": "BotUsername6",
+        "display_name": "Bot 6 Username",
+        "type": "text",
+        "help_text": "Username do bot 6 (ex: @meu-bot). Ao salvar, o User ID será resolvido automaticamente.",
+        "placeholder": "@username",
+        "default": ""
+      },
+      {
         "key": "BotUserID6",
         "display_name": "Bot 6 User ID",
         "type": "text",
-        "help_text": "The user ID of bot 6 to listen for messages.",
-        "placeholder": "Enter the bot user ID",
+        "help_text": "Preenchido automaticamente a partir do username acima. Não edite manualmente.",
+        "placeholder": "",
         "default": ""
       },
       {
@@ -162,11 +210,19 @@
         "default": ""
       },
       {
+        "key": "BotUsername7",
+        "display_name": "Bot 7 Username",
+        "type": "text",
+        "help_text": "Username do bot 7 (ex: @meu-bot). Ao salvar, o User ID será resolvido automaticamente.",
+        "placeholder": "@username",
+        "default": ""
+      },
+      {
         "key": "BotUserID7",
         "display_name": "Bot 7 User ID",
         "type": "text",
-        "help_text": "The user ID of bot 7 to listen for messages.",
-        "placeholder": "Enter the bot user ID",
+        "help_text": "Preenchido automaticamente a partir do username acima. Não edite manualmente.",
+        "placeholder": "",
         "default": ""
       },
       {
@@ -186,11 +242,19 @@
         "default": ""
       },
       {
+        "key": "BotUsername8",
+        "display_name": "Bot 8 Username",
+        "type": "text",
+        "help_text": "Username do bot 8 (ex: @meu-bot). Ao salvar, o User ID será resolvido automaticamente.",
+        "placeholder": "@username",
+        "default": ""
+      },
+      {
         "key": "BotUserID8",
         "display_name": "Bot 8 User ID",
         "type": "text",
-        "help_text": "The user ID of bot 8 to listen for messages.",
-        "placeholder": "Enter the bot user ID",
+        "help_text": "Preenchido automaticamente a partir do username acima. Não edite manualmente.",
+        "placeholder": "",
         "default": ""
       },
       {
@@ -210,11 +274,19 @@
         "default": ""
       },
       {
+        "key": "BotUsername9",
+        "display_name": "Bot 9 Username",
+        "type": "text",
+        "help_text": "Username do bot 9 (ex: @meu-bot). Ao salvar, o User ID será resolvido automaticamente.",
+        "placeholder": "@username",
+        "default": ""
+      },
+      {
         "key": "BotUserID9",
         "display_name": "Bot 9 User ID",
         "type": "text",
-        "help_text": "The user ID of bot 9 to listen for messages.",
-        "placeholder": "Enter the bot user ID",
+        "help_text": "Preenchido automaticamente a partir do username acima. Não edite manualmente.",
+        "placeholder": "",
         "default": ""
       },
       {
@@ -234,11 +306,19 @@
         "default": ""
       },
       {
+        "key": "BotUsername10",
+        "display_name": "Bot 10 Username",
+        "type": "text",
+        "help_text": "Username do bot 10 (ex: @meu-bot). Ao salvar, o User ID será resolvido automaticamente.",
+        "placeholder": "@username",
+        "default": ""
+      },
+      {
         "key": "BotUserID10",
         "display_name": "Bot 10 User ID",
         "type": "text",
-        "help_text": "The user ID of bot 10 to listen for messages.",
-        "placeholder": "Enter the bot user ID",
+        "help_text": "Preenchido automaticamente a partir do username acima. Não edite manualmente.",
+        "placeholder": "",
         "default": ""
       },
       {
