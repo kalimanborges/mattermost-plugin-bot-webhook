@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -114,6 +115,25 @@ func (p *BotWebhookPlugin) activeBots() []botMapping {
 	return active
 }
 
+// getSettingString retrieves a string value from the plugin settings map using
+// case-insensitive key lookup — Mattermost may lowercase keys during storage.
+func getSettingString(settings map[string]interface{}, key string) string {
+	// Try exact key first
+	if v, ok := settings[key]; ok {
+		if s, ok := v.(string); ok {
+			return s
+		}
+	}
+	// Try lowercase key
+	lower := strings.ToLower(key)
+	if v, ok := settings[lower]; ok {
+		if s, ok := v.(string); ok {
+			return s
+		}
+	}
+	return ""
+}
+
 // ConfigurationWillBeSaved intercepts the config save, resolves @usernames to user IDs,
 // and injects the resolved IDs into the config before it is persisted.
 // This ensures the BotUserID fields are always populated in the System Console UI.
@@ -126,8 +146,15 @@ func (p *BotWebhookPlugin) ConfigurationWillBeSaved(newCfg *model.Config) (*mode
 		return nil, nil
 	}
 
+	// Log all keys present to diagnose case normalization
+	keys := make([]string, 0, len(settings))
+	for k := range settings {
+		keys = append(keys, fmt.Sprintf("%s=%v", k, settings[k]))
+	}
+	p.API.LogInfo("[BotWebhook] ConfigurationWillBeSaved called", "entries", strings.Join(keys, " | "))
+
 	resolve := func(usernameKey, userIDKey string) {
-		usernameVal, _ := settings[usernameKey].(string)
+		usernameVal := getSettingString(settings, usernameKey)
 		if usernameVal == "" {
 			return
 		}
@@ -138,7 +165,10 @@ func (p *BotWebhookPlugin) ConfigurationWillBeSaved(newCfg *model.Config) (*mode
 			return
 		}
 		p.API.LogInfo("[BotWebhook] Resolved username", "username", u, "userID", user.Id)
+		// Write both CamelCase and lowercase to ensure Mattermost finds the value
+		// regardless of how it normalizes plugin setting keys internally.
 		settings[userIDKey] = user.Id
+		settings[strings.ToLower(userIDKey)] = user.Id
 	}
 
 	resolve("BotUsername", "BotUserID")
