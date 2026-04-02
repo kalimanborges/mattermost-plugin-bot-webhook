@@ -153,7 +153,18 @@ func (p *BotWebhookPlugin) ConfigurationWillBeSaved(newCfg *model.Config) (*mode
 	}
 	p.API.LogInfo("[BotWebhook] ConfigurationWillBeSaved called", "entries", strings.Join(keys, " | "))
 
+	// setID writes the resolved user ID under both CamelCase and lowercase key variants.
+	setID := func(userIDKey, id string) {
+		settings[userIDKey] = id
+		settings[strings.ToLower(userIDKey)] = id
+	}
+
 	resolve := func(usernameKey, userIDKey string) {
+		// Always clear the existing ID first.
+		// This ensures that if the username changes or is removed, the stale ID
+		// from a previous save does not persist.
+		setID(userIDKey, "")
+
 		usernameVal := getSettingString(settings, usernameKey)
 		if usernameVal == "" {
 			return
@@ -165,10 +176,7 @@ func (p *BotWebhookPlugin) ConfigurationWillBeSaved(newCfg *model.Config) (*mode
 			return
 		}
 		p.API.LogInfo("[BotWebhook] Resolved username", "username", u, "userID", user.Id)
-		// Write both CamelCase and lowercase to ensure Mattermost finds the value
-		// regardless of how it normalizes plugin setting keys internally.
-		settings[userIDKey] = user.Id
-		settings[strings.ToLower(userIDKey)] = user.Id
+		setID(userIDKey, user.Id)
 	}
 
 	resolve("BotUsername", "BotUserID")
