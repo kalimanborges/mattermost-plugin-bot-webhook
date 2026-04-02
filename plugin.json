@@ -3,7 +3,7 @@
   "name": "Bot Webhook",
   "description": "This plugin allows you to send a webhook when a bot receives a message.",
   "icon_path": "assets/starter-template-icon.svg",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "min_server_version": "8.0.0",
   "server": {
     "executables": {
@@ -15,7 +15,7 @@
     }
   },
   "settings_schema": {
-    "header": "Bot Webhook Plugin 0.5.3 | For each bot: enter the Username (@username) and save — the User ID will be resolved automatically.",
+    "header": "Bot Webhook Plugin 0.5.4 | For each bot: enter the Username (@username) and save — the User ID will be resolved automatically.",
     "settings": [
       {
         "key": "botusername",

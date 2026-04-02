@@ -142,6 +142,25 @@ func (p *BotWebhookPlugin) ConfigurationWillBeSaved(newCfg *model.Config) (*mode
 		return nil, nil
 	}
 
+	// Remove legacy CamelCase keys written by versions ≤0.5.2.
+	// After v0.5.3, canonical keys are all lowercase. If both casings exist in
+	// the stored config, Go's case-insensitive JSON unmarshal picks one
+	// non-deterministically — the old CamelCase value can "win" and load a stale ID.
+	for _, k := range []string{
+		"BotUsername", "BotUserID", "WebhookURL", "BearerToken",
+		"BotUsername2", "BotUserID2", "WebhookURL2", "BearerToken2",
+		"BotUsername3", "BotUserID3", "WebhookURL3", "BearerToken3",
+		"BotUsername4", "BotUserID4", "WebhookURL4", "BearerToken4",
+		"BotUsername5", "BotUserID5", "WebhookURL5", "BearerToken5",
+		"BotUsername6", "BotUserID6", "WebhookURL6", "BearerToken6",
+		"BotUsername7", "BotUserID7", "WebhookURL7", "BearerToken7",
+		"BotUsername8", "BotUserID8", "WebhookURL8", "BearerToken8",
+		"BotUsername9", "BotUserID9", "WebhookURL9", "BearerToken9",
+		"BotUsername10", "BotUserID10", "WebhookURL10", "BearerToken10",
+	} {
+		delete(settings, k)
+	}
+
 	resolve := func(usernameKey, userIDKey string) {
 		// Always clear the ID first — prevents stale values when username changes.
 		settings[userIDKey] = ""
