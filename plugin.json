@@ -15,7 +15,7 @@
     }
   },
   "settings_schema": {
-    "header": "Bot Webhook Plugin 0.5.4 | For each bot: enter the Username (@username) and save — the User ID will be resolved automatically.",
+    "header": "Bot Webhook Plugin 0.5.4 | For each bot: enter the Username (@username) and save — the User ID will be resolved automatically. Refresh the page after saving to see the resolved User ID.",
     "settings": [
       {
         "key": "botusername",
