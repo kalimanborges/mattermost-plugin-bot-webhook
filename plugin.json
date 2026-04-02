@@ -3,7 +3,7 @@
   "name": "Bot Webhook",
   "description": "This plugin allows you to send a webhook when a bot receives a message.",
   "icon_path": "assets/starter-template-icon.svg",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "min_server_version": "8.0.0",
   "server": {
     "executables": {
@@ -15,10 +15,10 @@
     }
   },
   "settings_schema": {
-    "header": "Bot Webhook Plugin 0.5.2 | For each bot: enter the Username (@username) and save — the User ID will be resolved automatically.",
+    "header": "Bot Webhook Plugin 0.5.3 | For each bot: enter the Username (@username) and save — the User ID will be resolved automatically.",
     "settings": [
       {
-        "key": "BotUsername",
+        "key": "botusername",
         "display_name": "Bot 1 Username",
         "type": "text",
         "help_text": "The bot username (e.g. @my-bot). The User ID will be resolved automatically on save.",
@@ -26,7 +26,7 @@
         "default": ""
       },
       {
-        "key": "BotUserID",
+        "key": "botuserid",
         "display_name": "Bot 1 User ID",
         "type": "text",
         "help_text": "Auto-populated from the username above. Do not edit manually.",
@@ -34,7 +34,7 @@
         "default": ""
       },
       {
-        "key": "WebhookURL",
+        "key": "webhookurl",
         "display_name": "Bot 1 Webhook URL",
         "type": "text",
         "help_text": "The URL to send the HTTP request to when bot 1 receives a message.",
@@ -42,7 +42,7 @@
         "default": ""
       },
       {
-        "key": "BearerToken",
+        "key": "bearertoken",
         "display_name": "Bot 1 Bearer Token",
         "type": "text",
         "help_text": "The bearer token to use for bot 1's HTTP request.",
@@ -50,7 +50,7 @@
         "default": ""
       },
       {
-        "key": "BotUsername2",
+        "key": "botusername2",
         "display_name": "Bot 2 Username",
         "type": "text",
         "help_text": "The bot username (e.g. @my-bot). The User ID will be resolved automatically on save.",
@@ -58,7 +58,7 @@
         "default": ""
       },
       {
-        "key": "BotUserID2",
+        "key": "botuserid2",
         "display_name": "Bot 2 User ID",
         "type": "text",
         "help_text": "Auto-populated from the username above. Do not edit manually.",
@@ -66,7 +66,7 @@
         "default": ""
       },
       {
-        "key": "WebhookURL2",
+        "key": "webhookurl2",
         "display_name": "Bot 2 Webhook URL",
         "type": "text",
         "help_text": "The URL to send the HTTP request to when bot 2 receives a message.",
@@ -74,7 +74,7 @@
         "default": ""
       },
       {
-        "key": "BearerToken2",
+        "key": "bearertoken2",
         "display_name": "Bot 2 Bearer Token",
         "type": "text",
         "help_text": "The bearer token to use for bot 2's HTTP request.",
@@ -82,7 +82,7 @@
         "default": ""
       },
       {
-        "key": "BotUsername3",
+        "key": "botusername3",
         "display_name": "Bot 3 Username",
         "type": "text",
         "help_text": "The bot username (e.g. @my-bot). The User ID will be resolved automatically on save.",
@@ -90,7 +90,7 @@
         "default": ""
       },
       {
-        "key": "BotUserID3",
+        "key": "botuserid3",
         "display_name": "Bot 3 User ID",
         "type": "text",
         "help_text": "Auto-populated from the username above. Do not edit manually.",
@@ -98,7 +98,7 @@
         "default": ""
       },
       {
-        "key": "WebhookURL3",
+        "key": "webhookurl3",
         "display_name": "Bot 3 Webhook URL",
         "type": "text",
         "help_text": "The URL to send the HTTP request to when bot 3 receives a message.",
@@ -106,7 +106,7 @@
         "default": ""
       },
       {
-        "key": "BearerToken3",
+        "key": "bearertoken3",
         "display_name": "Bot 3 Bearer Token",
         "type": "text",
         "help_text": "The bearer token to use for bot 3's HTTP request.",
@@ -114,7 +114,7 @@
         "default": ""
       },
       {
-        "key": "BotUsername4",
+        "key": "botusername4",
         "display_name": "Bot 4 Username",
         "type": "text",
         "help_text": "The bot username (e.g. @my-bot). The User ID will be resolved automatically on save.",
@@ -122,7 +122,7 @@
         "default": ""
       },
       {
-        "key": "BotUserID4",
+        "key": "botuserid4",
         "display_name": "Bot 4 User ID",
         "type": "text",
         "help_text": "Auto-populated from the username above. Do not edit manually.",
@@ -130,7 +130,7 @@
         "default": ""
       },
       {
-        "key": "WebhookURL4",
+        "key": "webhookurl4",
         "display_name": "Bot 4 Webhook URL",
         "type": "text",
         "help_text": "The URL to send the HTTP request to when bot 4 receives a message.",
@@ -138,7 +138,7 @@
         "default": ""
       },
       {
-        "key": "BearerToken4",
+        "key": "bearertoken4",
         "display_name": "Bot 4 Bearer Token",
         "type": "text",
         "help_text": "The bearer token to use for bot 4's HTTP request.",
@@ -146,7 +146,7 @@
         "default": ""
       },
       {
-        "key": "BotUsername5",
+        "key": "botusername5",
         "display_name": "Bot 5 Username",
         "type": "text",
         "help_text": "The bot username (e.g. @my-bot). The User ID will be resolved automatically on save.",
@@ -154,7 +154,7 @@
         "default": ""
       },
       {
-        "key": "BotUserID5",
+        "key": "botuserid5",
         "display_name": "Bot 5 User ID",
         "type": "text",
         "help_text": "Auto-populated from the username above. Do not edit manually.",
@@ -162,7 +162,7 @@
         "default": ""
       },
       {
-        "key": "WebhookURL5",
+        "key": "webhookurl5",
         "display_name": "Bot 5 Webhook URL",
         "type": "text",
         "help_text": "The URL to send the HTTP request to when bot 5 receives a message.",
@@ -170,7 +170,7 @@
         "default": ""
       },
       {
-        "key": "BearerToken5",
+        "key": "bearertoken5",
         "display_name": "Bot 5 Bearer Token",
         "type": "text",
         "help_text": "The bearer token to use for bot 5's HTTP request.",
@@ -178,7 +178,7 @@
         "default": ""
       },
       {
-        "key": "BotUsername6",
+        "key": "botusername6",
         "display_name": "Bot 6 Username",
         "type": "text",
         "help_text": "The bot username (e.g. @my-bot). The User ID will be resolved automatically on save.",
@@ -186,7 +186,7 @@
         "default": ""
       },
       {
-        "key": "BotUserID6",
+        "key": "botuserid6",
         "display_name": "Bot 6 User ID",
         "type": "text",
         "help_text": "Auto-populated from the username above. Do not edit manually.",
@@ -194,7 +194,7 @@
         "default": ""
       },
       {
-        "key": "WebhookURL6",
+        "key": "webhookurl6",
         "display_name": "Bot 6 Webhook URL",
         "type": "text",
         "help_text": "The URL to send the HTTP request to when bot 6 receives a message.",
@@ -202,7 +202,7 @@
         "default": ""
       },
       {
-        "key": "BearerToken6",
+        "key": "bearertoken6",
         "display_name": "Bot 6 Bearer Token",
         "type": "text",
         "help_text": "The bearer token to use for bot 6's HTTP request.",
@@ -210,7 +210,7 @@
         "default": ""
       },
       {
-        "key": "BotUsername7",
+        "key": "botusername7",
         "display_name": "Bot 7 Username",
         "type": "text",
         "help_text": "The bot username (e.g. @my-bot). The User ID will be resolved automatically on save.",
@@ -218,7 +218,7 @@
         "default": ""
       },
       {
-        "key": "BotUserID7",
+        "key": "botuserid7",
         "display_name": "Bot 7 User ID",
         "type": "text",
         "help_text": "Auto-populated from the username above. Do not edit manually.",
@@ -226,7 +226,7 @@
         "default": ""
       },
       {
-        "key": "WebhookURL7",
+        "key": "webhookurl7",
         "display_name": "Bot 7 Webhook URL",
         "type": "text",
         "help_text": "The URL to send the HTTP request to when bot 7 receives a message.",
@@ -234,7 +234,7 @@
         "default": ""
       },
       {
-        "key": "BearerToken7",
+        "key": "bearertoken7",
         "display_name": "Bot 7 Bearer Token",
         "type": "text",
         "help_text": "The bearer token to use for bot 7's HTTP request.",
@@ -242,7 +242,7 @@
         "default": ""
       },
       {
-        "key": "BotUsername8",
+        "key": "botusername8",
         "display_name": "Bot 8 Username",
         "type": "text",
         "help_text": "The bot username (e.g. @my-bot). The User ID will be resolved automatically on save.",
@@ -250,7 +250,7 @@
         "default": ""
       },
       {
-        "key": "BotUserID8",
+        "key": "botuserid8",
         "display_name": "Bot 8 User ID",
         "type": "text",
         "help_text": "Auto-populated from the username above. Do not edit manually.",
@@ -258,7 +258,7 @@
         "default": ""
       },
       {
-        "key": "WebhookURL8",
+        "key": "webhookurl8",
         "display_name": "Bot 8 Webhook URL",
         "type": "text",
         "help_text": "The URL to send the HTTP request to when bot 8 receives a message.",
@@ -266,7 +266,7 @@
         "default": ""
       },
       {
-        "key": "BearerToken8",
+        "key": "bearertoken8",
         "display_name": "Bot 8 Bearer Token",
         "type": "text",
         "help_text": "The bearer token to use for bot 8's HTTP request.",
@@ -274,7 +274,7 @@
         "default": ""
       },
       {
-        "key": "BotUsername9",
+        "key": "botusername9",
         "display_name": "Bot 9 Username",
         "type": "text",
         "help_text": "The bot username (e.g. @my-bot). The User ID will be resolved automatically on save.",
@@ -282,7 +282,7 @@
         "default": ""
       },
       {
-        "key": "BotUserID9",
+        "key": "botuserid9",
         "display_name": "Bot 9 User ID",
         "type": "text",
         "help_text": "Auto-populated from the username above. Do not edit manually.",
@@ -290,7 +290,7 @@
         "default": ""
       },
       {
-        "key": "WebhookURL9",
+        "key": "webhookurl9",
         "display_name": "Bot 9 Webhook URL",
         "type": "text",
         "help_text": "The URL to send the HTTP request to when bot 9 receives a message.",
@@ -298,7 +298,7 @@
         "default": ""
       },
       {
-        "key": "BearerToken9",
+        "key": "bearertoken9",
         "display_name": "Bot 9 Bearer Token",
         "type": "text",
         "help_text": "The bearer token to use for bot 9's HTTP request.",
@@ -306,7 +306,7 @@
         "default": ""
       },
       {
-        "key": "BotUsername10",
+        "key": "botusername10",
         "display_name": "Bot 10 Username",
         "type": "text",
         "help_text": "The bot username (e.g. @my-bot). The User ID will be resolved automatically on save.",
@@ -314,7 +314,7 @@
         "default": ""
       },
       {
-        "key": "BotUserID10",
+        "key": "botuserid10",
         "display_name": "Bot 10 User ID",
         "type": "text",
         "help_text": "Auto-populated from the username above. Do not edit manually.",
@@ -322,7 +322,7 @@
         "default": ""
       },
       {
-        "key": "WebhookURL10",
+        "key": "webhookurl10",
         "display_name": "Bot 10 Webhook URL",
         "type": "text",
         "help_text": "The URL to send the HTTP request to when bot 10 receives a message.",
@@ -330,7 +330,7 @@
         "default": ""
       },
       {
-        "key": "BearerToken10",
+        "key": "bearertoken10",
         "display_name": "Bot 10 Bearer Token",
         "type": "text",
         "help_text": "The bearer token to use for bot 10's HTTP request.",

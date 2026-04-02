@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -13,56 +12,59 @@ import (
 
 const pluginID = "bot-webhook-plugin"
 
+// Configuration maps to the lowercase keys defined in plugin.json settings_schema.
+// LoadPluginConfiguration uses case-insensitive JSON unmarshaling, so the Go
+// field names do not need to match the key casing exactly.
 type Configuration struct {
-	BotUsername string
-	BotUserID   string
-	WebhookURL  string
-	BearerToken string
+	BotUsername string `json:"botusername"`
+	BotUserID   string `json:"botuserid"`
+	WebhookURL  string `json:"webhookurl"`
+	BearerToken string `json:"bearertoken"`
 
-	BotUsername2 string
-	BotUserID2   string
-	WebhookURL2  string
-	BearerToken2 string
+	BotUsername2 string `json:"botusername2"`
+	BotUserID2   string `json:"botuserid2"`
+	WebhookURL2  string `json:"webhookurl2"`
+	BearerToken2 string `json:"bearertoken2"`
 
-	BotUsername3 string
-	BotUserID3   string
-	WebhookURL3  string
-	BearerToken3 string
+	BotUsername3 string `json:"botusername3"`
+	BotUserID3   string `json:"botuserid3"`
+	WebhookURL3  string `json:"webhookurl3"`
+	BearerToken3 string `json:"bearertoken3"`
 
-	BotUsername4 string
-	BotUserID4   string
-	WebhookURL4  string
-	BearerToken4 string
+	BotUsername4 string `json:"botusername4"`
+	BotUserID4   string `json:"botuserid4"`
+	WebhookURL4  string `json:"webhookurl4"`
+	BearerToken4 string `json:"bearertoken4"`
 
-	BotUsername5 string
-	BotUserID5   string
-	WebhookURL5  string
-	BearerToken5 string
+	BotUsername5 string `json:"botusername5"`
+	BotUserID5   string `json:"botuserid5"`
+	WebhookURL5  string `json:"webhookurl5"`
+	BearerToken5 string `json:"bearertoken5"`
 
-	BotUsername6 string
-	BotUserID6   string
-	WebhookURL6  string
-	BearerToken6 string
+	BotUsername6 string `json:"botusername6"`
+	BotUserID6   string `json:"botuserid6"`
+	WebhookURL6  string `json:"webhookurl6"`
+	BearerToken6 string `json:"bearertoken6"`
 
-	BotUsername7 string
-	BotUserID7   string
-	WebhookURL7  string
-	BearerToken7 string
+	BotUsername7 string `json:"botusername7"`
+	BotUserID7   string `json:"botuserid7"`
+	WebhookURL7  string `json:"webhookurl7"`
+	BearerToken7 string `json:"bearertoken7"`
 
-	BotUsername8 string
-	BotUserID8   string
-	WebhookURL8  string
-	BearerToken8 string
+	BotUsername8 string `json:"botusername8"`
+	BotUserID8   string `json:"botuserid8"`
+	WebhookURL8  string `json:"webhookurl8"`
+	BearerToken8 string `json:"bearertoken8"`
 
-	BotUsername9 string
-	BotUserID9   string
-	WebhookURL9  string
-	BearerToken9 string
+	BotUsername9 string `json:"botusername9"`
+	BotUserID9   string `json:"botuserid9"`
+	WebhookURL9  string `json:"webhookurl9"`
+	BearerToken9 string `json:"bearertoken9"`
 
-	BotUsername10 string
-	BotUserID10   string
-	WebhookURL10  string
-	BearerToken10 string
+	BotUsername10 string `json:"botusername10"`
+	BotUserID10   string `json:"botuserid10"`
+	WebhookURL10  string `json:"webhookurl10"`
+	BearerToken10 string `json:"bearertoken10"`
 }
 
 type botMapping struct {
@@ -71,14 +73,15 @@ type botMapping struct {
 	BearerToken string
 }
 
-// Plugin implements the interface expected by the Mattermost server to communicate between the server and plugin processes.
+// BotWebhookPlugin implements the interface expected by the Mattermost server.
 type BotWebhookPlugin struct {
 	plugin.MattermostPlugin
 	configuration *Configuration
 }
 
 // activeBots returns the list of configured bot mappings with non-empty user IDs.
-// If a bot has a username but no user ID, it attempts to resolve the username via the API as fallback.
+// If a bot has a username but no user ID, it attempts to resolve the username
+// via the API as a fallback.
 func (p *BotWebhookPlugin) activeBots() []botMapping {
 	cfg := p.configuration
 	all := []struct {
@@ -115,18 +118,11 @@ func (p *BotWebhookPlugin) activeBots() []botMapping {
 	return active
 }
 
-// getSettingString retrieves a string value from the plugin settings map using
-// case-insensitive key lookup — Mattermost may lowercase keys during storage.
-func getSettingString(settings map[string]interface{}, key string) string {
-	// Try exact key first
+// getString reads a string value from the settings map by its lowercase key.
+// All keys in plugin.json are lowercase, and Mattermost submits form values
+// with lowercase keys — so no fallback or case conversion is needed.
+func getString(settings map[string]interface{}, key string) string {
 	if v, ok := settings[key]; ok {
-		if s, ok := v.(string); ok {
-			return s
-		}
-	}
-	// Try lowercase key
-	lower := strings.ToLower(key)
-	if v, ok := settings[lower]; ok {
 		if s, ok := v.(string); ok {
 			return s
 		}
@@ -134,9 +130,9 @@ func getSettingString(settings map[string]interface{}, key string) string {
 	return ""
 }
 
-// ConfigurationWillBeSaved intercepts the config save, resolves @usernames to user IDs,
-// and injects the resolved IDs into the config before it is persisted.
-// This ensures the BotUserID fields are always populated in the System Console UI.
+// ConfigurationWillBeSaved intercepts the config save, resolves @usernames to
+// user IDs, and injects the resolved IDs into the config before it is persisted.
+// If the username is empty or cannot be resolved, the User ID is cleared.
 func (p *BotWebhookPlugin) ConfigurationWillBeSaved(newCfg *model.Config) (*model.Config, error) {
 	if newCfg.PluginSettings.Plugins == nil {
 		return nil, nil
@@ -146,49 +142,34 @@ func (p *BotWebhookPlugin) ConfigurationWillBeSaved(newCfg *model.Config) (*mode
 		return nil, nil
 	}
 
-	// Log all keys present to diagnose case normalization
-	keys := make([]string, 0, len(settings))
-	for k := range settings {
-		keys = append(keys, fmt.Sprintf("%s=%v", k, settings[k]))
-	}
-	p.API.LogInfo("[BotWebhook] ConfigurationWillBeSaved called", "entries", strings.Join(keys, " | "))
-
-	// setID writes the resolved user ID under both CamelCase and lowercase key variants.
-	setID := func(userIDKey, id string) {
-		settings[userIDKey] = id
-		settings[strings.ToLower(userIDKey)] = id
-	}
-
 	resolve := func(usernameKey, userIDKey string) {
-		// Always clear the existing ID first.
-		// This ensures that if the username changes or is removed, the stale ID
-		// from a previous save does not persist.
-		setID(userIDKey, "")
+		// Always clear the ID first — prevents stale values when username changes.
+		settings[userIDKey] = ""
 
-		usernameVal := getSettingString(settings, usernameKey)
-		if usernameVal == "" {
+		username := getString(settings, usernameKey)
+		if username == "" {
 			return
 		}
-		u := strings.TrimPrefix(usernameVal, "@")
+		u := strings.TrimPrefix(username, "@")
 		user, appErr := p.API.GetUserByUsername(u)
 		if appErr != nil {
 			p.API.LogError("[BotWebhook] Failed to resolve username", "username", u, "error", appErr.Error())
 			return
 		}
 		p.API.LogInfo("[BotWebhook] Resolved username", "username", u, "userID", user.Id)
-		setID(userIDKey, user.Id)
+		settings[userIDKey] = user.Id
 	}
 
-	resolve("BotUsername", "BotUserID")
-	resolve("BotUsername2", "BotUserID2")
-	resolve("BotUsername3", "BotUserID3")
-	resolve("BotUsername4", "BotUserID4")
-	resolve("BotUsername5", "BotUserID5")
-	resolve("BotUsername6", "BotUserID6")
-	resolve("BotUsername7", "BotUserID7")
-	resolve("BotUsername8", "BotUserID8")
-	resolve("BotUsername9", "BotUserID9")
-	resolve("BotUsername10", "BotUserID10")
+	resolve("botusername", "botuserid")
+	resolve("botusername2", "botuserid2")
+	resolve("botusername3", "botuserid3")
+	resolve("botusername4", "botuserid4")
+	resolve("botusername5", "botuserid5")
+	resolve("botusername6", "botuserid6")
+	resolve("botusername7", "botuserid7")
+	resolve("botusername8", "botuserid8")
+	resolve("botusername9", "botuserid9")
+	resolve("botusername10", "botuserid10")
 
 	newCfg.PluginSettings.Plugins[pluginID] = settings
 	return newCfg, nil
